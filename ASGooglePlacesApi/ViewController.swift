@@ -27,6 +27,7 @@ class ViewController: UIViewController {
 extension ViewController: CLLocationManagerDelegate{
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         g.setupDelegateForLoction(manager, locations: locations)
+        print("hello")
     }
     
 }
