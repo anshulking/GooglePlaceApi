@@ -36,6 +36,46 @@ public class GooglePlaceApi: NSObject{
         UserDefaults.standard.synchronize()
     }
     
+    public func syncronizationCall(withSuccessHandler successHandler: @escaping (_ response: NSDictionary?, _ status:Bool) -> Void)
+    {
+        
+        var request : URLRequest = URLRequest(url: URL(string: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=23.0345116,72.5063882&radius=1000&types=food&key=AIzaSyB7yYN2Wtc7PEkneyWfVmF1SXVQomcT9k0")!)
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+        request.timeoutInterval = 60;
+        request.httpMethod = "GET"
+        let task =  session.dataTask(with: request, completionHandler:{(data, res, err) -> Void in
+            if (data != nil)
+            {
+                let json = try? JSONSerialization.jsonObject(with: data!, options: [])
+                if let response = res as? HTTPURLResponse , 200...299 ~= response.statusCode {
+                    //   print("success" + json.debugDescription)
+                    //                    print(json)
+                    
+                    let dic  = json as? NSDictionary
+                    successHandler(dic!,true)
+                }
+                else
+                {
+                    successHandler(nil,false)
+                    print("Failed")
+                }
+            }
+            else{
+                successHandler(nil,false)
+                print("Data not found" + (err?.localizedDescription)!)
+            }
+            
+        })
+        task.resume()
+        
+        
+        
+    }
+    
+    
+    
+    
 }
 extension GooglePlaceApi: CLLocationManagerDelegate{
     

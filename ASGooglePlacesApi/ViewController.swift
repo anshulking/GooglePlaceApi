@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 class ViewController: UIViewController {
     var locationmanager: CLLocationManager = CLLocationManager()
-    let g : GooglePlaceApi = GooglePlaceApi(googlePlacesApikey: "121464454844")
+    let g : GooglePlaceApi = GooglePlaceApi(googlePlacesApikey: "AIzaSyB7yYN2Wtc7PEkneyWfVmF1SXVQomcT9k0")
     override func viewDidLoad() {
         super.viewDidLoad()
         g.getLocation(self, locationManager: locationmanager)
